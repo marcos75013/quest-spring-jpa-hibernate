@@ -50,7 +50,7 @@ public class SchoolController {
 package com.wildcodeschool.wildandwizard.controller;
 
 import com.wildcodeschool.wildandwizard.entity.School;
-import com.wildcodeschool.wildandwizard.repository.SchoolRepository; // Ajout de l'import
+import com.wildcodeschool.wildandwizard.repository.SchoolRepository; 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

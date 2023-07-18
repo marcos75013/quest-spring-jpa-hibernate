@@ -65,7 +65,7 @@ public class School {
     private Long capacity;
     private String country;
 
-    // Constructeurs, getters et setters
+    
 
     public School() {
     }

@@ -1,4 +1,4 @@
-package com.wildcodeschool.wildandwizard.controller;
+/*package com.wildcodeschool.wildandwizard.controller;
 
 import com.wildcodeschool.wildandwizard.entity.School;
 import org.springframework.stereotype.Controller;
@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class SchoolController {
 
-    // TODO : get school repository by dependency injection
+    
 
     @GetMapping("/schools")
     public String getAll(Model model) {
 
-        // TODO : find all schools
+      
 
         return "schools";
     }
@@ -25,7 +25,7 @@ public class SchoolController {
     public String getSchool(Model model,
                             @RequestParam(required = false) Long id) {
 
-        // TODO : find one school by id
+       
 
         return "school";
     }
@@ -33,7 +33,7 @@ public class SchoolController {
     @PostMapping("/school")
     public String postSchool(@ModelAttribute School school) {
 
-        // TODO : create or update a school
+       
 
         return "redirect:/schools";
     }
@@ -41,8 +41,56 @@ public class SchoolController {
     @GetMapping("/school/delete")
     public String deleteSchool(@RequestParam Long id) {
 
-        // TODO : delete a school
+       
 
+        return "redirect:/schools";
+    }
+}*/
+
+package com.wildcodeschool.wildandwizard.controller;
+
+import com.wildcodeschool.wildandwizard.entity.School;
+import com.wildcodeschool.wildandwizard.repository.SchoolRepository; // Ajout de l'import
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+@Controller
+public class SchoolController {
+
+    @Autowired
+    private SchoolRepository schoolRepository;
+
+    @GetMapping("/schools")
+    public String getAll(Model model) {
+        model.addAttribute("schools", schoolRepository.findAll());
+        return "schools";
+    }
+
+    @GetMapping("/school")
+    public String getSchool(Model model,
+                            @RequestParam(required = false) Long id) {
+        School school = new School();
+        if (id != null) {
+            school = schoolRepository.findById(id).orElse(null);
+        }
+        model.addAttribute("school", school);
+        return "school";
+    }
+
+    @PostMapping("/school")
+    public String postSchool(@ModelAttribute School school) {
+        schoolRepository.save(school);
+        return "redirect:/schools";
+    }
+
+    @GetMapping("/school/delete")
+    public String deleteSchool(@RequestParam Long id) {
+        schoolRepository.deleteById(id);
         return "redirect:/schools";
     }
 }
